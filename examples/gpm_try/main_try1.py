@@ -1,9 +1,27 @@
 
-# Import numpy, pandas, linearsolve, matplotlib.pyplot
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-#import linearsolve as ls
-import matplotlib.pyplot as plt
+import pathlib # Modern alternative for path manipulationimport pathlib # Modern alternative for path manipulation
+import sys
+import os
+
+# --- Add the project root to sys.path ---
+# Get the path to the directory containing this script (examples/gpm_try)
+script_dir = pathlib.Path(__file__).parent.resolve()
+# Get the path to the project root (which is two levels up from examples/gpm_try)
+project_root = script_dir.parent.parent.resolve()
+
+# Add the project root to the beginning of the Python path
+if str(project_root) not in sys.path:
+    print(f"Adding project root to Python path: {project_root}")
+    sys.path.insert(0, str(project_root))
+# --- End of path modification ---
+
+# Import numpy, pandas, linearsolve, matplotlib.pyplot
+
+import linearsolve as ls
+
 plt.style.use('classic')
 plt.rcParams['figure.facecolor'] = 'white'
 
@@ -86,7 +104,7 @@ def equations(variables_forward,variables_current,parameters):
 
 # Initialize the nk model
 
-nk = model(equations=equations,
+nk = ls.model(equations=equations,
             n_states=3,
             n_exo_states = 3,
             variables=['g','u','v','i','r','y','pi'],
